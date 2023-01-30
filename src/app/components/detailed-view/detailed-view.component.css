@@ -1,0 +1,55 @@
+ 
+.container{
+    padding-top: 5%;
+}
+
+.profilePic{
+    float: left;
+    width: 10%;
+    padding-left: 2%;
+    padding-top: 0.5%;
+}
+.course{
+    font-weight: bold;
+}
+li{
+    list-style-type: none;
+}
+
+.example-card {
+    
+    background-color: whitesmoke;
+  }
+  
+  .example-header-image {
+    background-size: cover;
+  }
+  
+  h3{
+    text-decoration: underline;
+    font-weight: bold;
+    margin-top:5px;
+    margin-bottom: 1px;
+  }
+  mat-card-content{
+    background-color: whitesmoke;
+  }
+  .main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  
+  }
+  .header{
+    margin-inline-start: 5rem;
+    width: 100%;
+  }
+  button{
+    float: right;
+  }
+.certificate-icon{
+  vertical-align: bottom;
+}
+.delete:hover{
+  color: tomato;
+} 

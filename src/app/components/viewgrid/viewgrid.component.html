@@ -1,0 +1,51 @@
+<mat-card class="example-card" style="width: 97%">
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div
+        fxFlex="25"
+        fxFlex.sm="33"
+        fxFlex.xs="50"
+        *ngFor="let freelancer of freelancers"
+      >
+        <mat-grid-list cols="1" rowHeight="1.5:2" class="grid-list">
+          <mat-grid-tile
+            class="tile"
+            [routerLink]="['/view-details', freelancer._id]"
+            routerLinkActive="router-link-active"
+          >
+            <div>
+              <img
+                class="femaleAvatar"
+                *ngIf="freelancer.gender == 'female'"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1urixDbYF6eKgEGMMgkmZsvF4LeIH-hq8esh1810CohOqP56EjvtDBfisEPd8vioocX0&usqp=CAU"
+                alt="Female"
+              />
+              <img
+                *ngIf="freelancer.gender == 'male'"
+                src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                alt="Male"
+              />
+              <p>Name: {{ freelancer.name }}</p>
+              <p>@{{ freelancer.userName }}</p>
+              <p>
+                <mat-icon>location_on</mat-icon>
+                {{ freelancer.address.country }}
+              </p>
+              <p><mat-icon>mail</mat-icon>{{ freelancer.email }}</p>
+              <p><mat-icon>call</mat-icon>{{ freelancer.mobile }}</p>
+              <p><mat-icon>hotel_class</mat-icon>{{freelancer.rating}}</p>
+              <p>Availability : <mat-icon
+                *ngIf="freelancer.availableBadge === true"
+                [ngStyle]="{ color: 'green' }"
+                >radio_button_checked</mat-icon
+              >
+              <mat-icon *ngIf="freelancer.availableBadge === false"
+                >radio_button_checked</mat-icon
+              ></p>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

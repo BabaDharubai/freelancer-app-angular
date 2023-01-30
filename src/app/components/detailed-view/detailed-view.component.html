@@ -1,0 +1,170 @@
+<div [ngClass]="'container'" *ngIf="freelancer">
+  <div [ngClass]="'main'">
+  <div [ngClass]="'profilePic'">
+    <img
+                class="femaleAvatar"
+                *ngIf="freelancer.gender=='female'"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1urixDbYF6eKgEGMMgkmZsvF4LeIH-hq8esh1810CohOqP56EjvtDBfisEPd8vioocX0&usqp=CAU"
+                width="100px"
+                height="100px"
+                alt="Female"
+              />
+              <img
+                *ngIf="freelancer.gender=='male'"
+                src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                width="100px"
+                height="100px"
+                alt="Male"
+              />
+  </div>
+  <div class="header">
+    <h3>{{ freelancer.name }}</h3>
+    <mat-chip
+      ><mat-icon [ngStyle]="{color: '#ad7e70'}">location_on</mat-icon> {{ freelancer.address.state }},{{
+        freelancer.address.country
+      }}</mat-chip
+    ><br />
+    <mat-chip
+      *ngIf="freelancer.availableBadge === true"
+      [ngStyle]="{ color: 'blue' }"
+      matTooltip="available"
+      ><mat-icon>flash_on</mat-icon>Available now</mat-chip
+    >
+    <mat-chip
+      *ngIf="freelancer.availableBadge === false"
+      matTooltip="not-available"
+      ><mat-icon>flash_off</mat-icon>Not-Available</mat-chip
+    >
+    <button mat-button 
+            color="primary"
+            class="delete"
+            (click)="deleteFreelancer(freelancer._id)"
+            *ngIf="roles.includes('manager')">
+      <mat-icon matTooltip="Delete"d>delete</mat-icon>
+    </button>
+    <button mat-button
+            color="primary"
+            [routerLink]="['/edit-freelancer',freelancer._id]"
+            *ngIf="roles.includes('manager')||roles.includes('editor')">
+      <mat-icon matTooltip="Edit Details">edit</mat-icon>
+    </button>
+   
+
+      
+    </div>
+  </div>
+    <mat-tab-group>
+      <mat-tab label="Info">
+        
+        <div name="details">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+            </mat-card-header>
+            <mat-card-content>
+              <fieldset>
+                
+                <mat-chip
+                  ><mat-icon>alternate_email</mat-icon
+                  >{{ freelancer.userName }}</mat-chip
+                ><br />
+                <mat-chip
+                  ><mat-icon>phone_iphone</mat-icon
+                  >{{ freelancer.mobile }}</mat-chip
+                ><br />
+                <mat-chip
+                  ><mat-icon>email</mat-icon>{{ freelancer.email }}</mat-chip
+                ><br />
+                <mat-chip
+                  ><mat-icon>monetization_on</mat-icon
+                  >{{ freelancer.pricePerHour }} per Hour</mat-chip
+                ><br />
+                <h3 [ngStyle]="{'text-decoration':'none','font-weight':'normal'}">Description : {{ freelancer.description }}</h3> 
+              </fieldset>
+            </mat-card-content>
+            <mat-card-actions> </mat-card-actions>
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Category & Skills" >
+        
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+          </mat-card-header>
+          <mat-card-content>
+            <fieldset>
+              <h3>Category & Expertise</h3>
+              <mat-chip-list>
+              <mat-chip *ngFor="let category of freelancer.category">{{
+                category
+              }}</mat-chip></mat-chip-list>
+              <h3>Skills & Expertise</h3>
+              <mat-chip-list>
+              <mat-chip *ngFor="let skill of freelancer.skills">{{
+                skill
+              }}</mat-chip></mat-chip-list>
+            </fieldset>
+          </mat-card-content>
+          <mat-card-actions> </mat-card-actions>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="Certificates">
+        
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+          </mat-card-header>
+          <mat-card-content>
+            <fieldset>
+              <h3>Certifications</h3>
+
+              <ul *ngFor="let certificate of freelancer.certificates">
+                <li [ngClass]="'course'" *ngIf="certificate.course!='NA'">
+                  <mat-icon class="certificate-icon">history_edu</mat-icon>{{ certificate.course }}
+                </li>
+                <li>
+                 <mat-icon class="certificate-icon">hourglass_bottom</mat-icon>{{ certificate.duration }} months
+                </li>
+                <li>
+                  <mat-icon class="certificate-icon">school</mat-icon> {{ certificate.provider }}
+                </li>
+              </ul>
+            </fieldset>
+          </mat-card-content>
+          <mat-card-actions> </mat-card-actions>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="Experience">
+        
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+          </mat-card-header>
+          <mat-card-content>
+            <fieldset>
+              <h3>Employment History</h3>
+              <ul *ngFor="let experience of freelancer.experiences">
+                <li [ngClass]="'course'">
+                  Role : {{ experience.role }}
+                </li>
+                <li>
+                  Company : {{ experience.companyName }}
+                </li>
+                <li>
+                  {{ experience.startDate | date }} - {{ experience.endDate |date }}
+                </li>
+              </ul>
+            </fieldset>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+<mat-chip-list></mat-chip-list>
+</div>
+
+
+

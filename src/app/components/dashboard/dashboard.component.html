@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <mat-icon [ngClass]="'logo'">flutter_dash</mat-icon>
+    <span class="brand">Freelancer</span>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="profile"><mat-icon>account_circle</mat-icon></button>
+<mat-menu #profile="matMenu" xPosition="before">
+  <button mat-menu-item (click)="userProfile()">Profile</button>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
+  </mat-toolbar>
+<app-nav-bar></app-nav-bar>
+<router-outlet></router-outlet>
+

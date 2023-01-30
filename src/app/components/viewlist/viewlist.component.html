@@ -1,0 +1,302 @@
+
+
+<!-- button for the filter options -->
+<button
+  [ngClass]="'list-icons'"
+  mat-button
+  color="primary"
+  matTooltip="Filter"
+  matTooltipPosition="above"
+  (click)="openDialog(pick)"
+>
+  <mat-icon>filter_list</mat-icon>
+</button>
+
+<!-- the dialog box containing options -->
+<ng-template #pick>
+  <mat-dialog-content>
+    <mat-selection-list text-align="center" [ngModel]="options" #filter>
+      <mat-option (click)="removeOptions()" text-align="center">None</mat-option>
+      <mat-option (click)="selectAll()" text-align="center">select all</mat-option>
+      <mat-list-option
+        *ngFor="let column of displayedColumns"
+        value="{{ column }}"
+      >
+        {{ column }}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      class="option-button"
+      mat-button
+      matDialogClose
+      color="primary"
+      (click)="show(filter._value)"
+    >
+      save
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- frontend search based on the corresponding page -->
+<mat-form-field>
+    <input 
+            [ngClass]="'search'"
+            matInput
+            placeholder="search"
+            (keyup)="search($event)">
+  
+  </mat-form-field>
+
+
+  <!-- table -->
+<div [ngClass]="'outer-wrapper'">
+<div [ngClass]="'table-wrapper'" >
+  <table
+    *ngIf="options.length!=0"
+    mat-table
+    matSort
+    (matSortChange)="sortData($event)"
+    [dataSource]="datasource"
+    class="mat-elevation-z8"
+    
+  >
+    <ng-container matColumnDef="_id" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header >
+        ID
+      </th>
+      <td mat-cell *matCellDef="let freelancer" [matTooltip]="freelancer._id">...{{ freelancer._id.slice(27,32)}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="_rev" >
+      <th mat-header-cell *matHeaderCellDef >
+       REV
+      </th>
+      <td mat-cell *matCellDef="let freelancer"> {{freelancer._rev.charAt(0)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        NAME
+      </th>
+      <td mat-cell *matCellDef="let freelancer">{{ freelancer.name }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="userName" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        USER NAME
+      </th>
+      <td mat-cell *matCellDef="let freelancer">{{ freelancer.userName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        E-MAIL
+      </th>
+      <td mat-cell *matCellDef="let freelancer">{{ freelancer.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="mobile" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        MOBILE
+      </th>
+      <td mat-cell *matCellDef="let freelancer">{{ freelancer.mobile }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        ADDRESS
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let freelancer"
+        matTooltip="{{ freelancer.address.city}}, {{ freelancer.address.state}}, {{freelancer.address.country}}, {{freelancer.address.zip}}"
+      >
+        <mat-icon class="align" [ngStyle]="{color: '#ad7e70'}">location_on</mat-icon>{{ freelancer.address.country }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        CATEGORY
+      </th>
+      <td mat-cell *matCellDef="let freelancer" matTooltip="{{freelancer.category}}">
+        <div *ngIf="freelancer.category">{{ freelancer.category.slice(0,2)}}...</div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hoursPerWeek" >
+      <th mat-header-cell *matHeaderCellDef matTooltip="Hours/Week" appResizeable mat-sort-header>
+        H/W
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        {{ freelancer.hoursPerWeek }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rating" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        RATING
+      </th>
+      <td mat-cell *matCellDef="let freelancer">{{ freelancer.rating }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="talentQuality" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        TALENT
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        {{ freelancer.talentQuality }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="availableBadge" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        AVIALABILITY
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        <mat-icon
+          *ngIf="freelancer.availableBadge === true"
+          [ngStyle]="{ color: 'green' }"
+          >radio_button_checked</mat-icon
+        >
+        <mat-icon *ngIf="freelancer.availableBadge === false"
+          >radio_button_unchecked</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="skills" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        SKILLS
+      </th>
+      <td [ngClass]="'list'" mat-cell *matCellDef="let freelancer" matTooltip="{{freelancer.skills}}">
+        <div *ngIf="freelancer.skills">{{ freelancer.skills.slice(0,2)}}...</div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gender" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        GENDER
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        <mat-icon
+          [ngStyle]="{color: 'rgb(173, 126, 112)'}"
+          *ngIf="freelancer.gender === 'male'"
+          matTooltip="{{ freelancer.gender }}"
+          >man</mat-icon
+        >
+        <mat-icon 
+        [ngStyle]="{color: 'rgb(173, 126, 112)'}"
+        *ngIf="freelancer.gender === 'female'" matTooltip="fe-male"
+          >woman</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="languages" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        LANGUAGES
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        
+        {{ freelancer.languages }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="jobsCompleted" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        JOBS <mat-icon [ngStyle]="{ color: 'green' }">check_small</mat-icon>
+      </th>
+      <td mat-cell *matCellDef="let freelancer" reaonly="'true'">
+        {{freelancer.jobsCompleted}}%
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="joinedDate" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        JOINDATE
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        {{ freelancer.joinedDate | date }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="pricePerHour" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header matTooltip="price/Hour">
+        $/Hour
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        ${{ freelancer.pricePerHour }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        DESCRIPTION
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let freelancer"
+        matTooltip="{{ freelancer.description }}"
+      >
+        {{ freelancer.description | slice : 0 : 10 }}...
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="certificates" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        CERTIFICATES
+      </th>
+      <div *ngFor="let freelancer"></div>
+      <td mat-cell *matCellDef="let freelancer">
+        {{ freelancer.certificates | filter : "course" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="experiences" >
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        EXPERIENCES
+      </th>
+      <td mat-cell *matCellDef="let freelancer">
+        {{ freelancer.experiences | experience : "role" }}
+      </td>
+    </ng-container>
+
+    <ng-container  matColumnDef="edit" *ngIf="roles.includes('manager') || roles.includes('editor')">
+      <th mat-header-cell *matHeaderCellDef  >EDIT</th>
+      <td mat-cell *matCellDef="let freelancer">
+        <div [ngClass]="'editButton'">
+        <button
+        mat-button
+          type="button"
+          *ngIf="roles.includes('manager') || roles.includes('editor')"
+         
+          (click)="editFreelancer(freelancer._id)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-button
+          class="delete"
+          type="button"
+          *ngIf="roles.includes('manager')"
+         
+          (click)="deleteFreelancer(freelancer._id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button></div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="options"></tr>
+    <tr
+      (click)="route($event, freelancer._id)"
+      mat-row
+      *matRowDef="let row; columns: options; let freelancer"
+    ></tr>
+  </table>
+</div>
+</div>

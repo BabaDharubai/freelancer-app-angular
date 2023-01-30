@@ -1,0 +1,104 @@
+header{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+table{
+    width:100%;
+    border: 1px solid rgb(64, 200, 231);
+    
+}
+td{
+  text-align: center;
+}
+th{
+  /* position:sticky; */
+  top: 0px;
+}
+.table-wrapper::-webkit-scrollbar {
+  display: none;
+
+  
+}
+th.mat-header-cell{
+  
+  background-color:lightgray;
+  text-align: center;
+  color: rgb(26, 6, 46);
+}
+td.mat-cell{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.table-wrapper{
+  overflow-x: auto;
+  max-height:450px;
+  overflow-y: auto;
+  
+}
+.outer-wrapper{
+  border: 1px solid rgb(182, 226, 237);
+  box-shadow: 2px 2px 2px 2px rgb(105, 218, 230);
+  margin-left:10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  max-width: 100%;
+
+}
+tr:hover{
+  background-color:  rgb(207, 248, 255);
+}
+a{
+  text-decoration: none;
+}
+.list-icons{
+  float: right;
+  
+    position:absolute;
+    top: 100px;
+    right:0;
+}
+.mat-form-field{
+  float: right;
+  position: absolute;
+  top: 105px;
+  right:70px;
+}
+button{
+  padding: 10px;
+  transform: scale(0.85);
+}
+.editButton{
+  display: flex;
+  flex-direction: row;
+  
+}
+.align{
+  vertical-align: bottom;
+}
+.delete:hover{
+  color:tomato
+}
+.option-button{
+  background-color: rgb(0, 217, 255);
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+}
+.option-button:hover{
+  box-shadow: 0px 5px 5px rgb(0, 217, 255);
+  transform: translateY(-0.2px)
+}
+.list-icons:hover{
+  
+  color: rgb(0, 217, 255);
+  border-radius: 20px;
+  box-shadow: rgb(0, 217, 255) 0px 7px 15px 0px;
+}
+::ng-deep .mat-sort-header-container {
+  justify-content: center;
+}
+.toggleButton{
+  width: 100%;
+}

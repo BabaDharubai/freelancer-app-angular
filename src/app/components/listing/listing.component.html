@@ -1,0 +1,28 @@
+
+
+<button mat-button 
+        matTooltip="List/Grid" 
+        matTooltipPositionAtOrigin=false
+        (click)="change()" 
+        >
+        <mat-icon>grid_on</mat-icon>
+</button>
+
+<div>
+  <app-viewlist
+    [displayedColumns]="displayedColumns"
+    [freelancers]="freelancers"
+    (sort)="sort($event)"
+    *ngIf="grid"
+  ></app-viewlist>
+  <app-viewgrid [freelancers]="freelancers" *ngIf="!grid"></app-viewgrid>
+</div>
+
+<mat-paginator
+  [length]="length"
+  [pageSize]="10"
+  [pageSizeOptions]="[1, 5, 10, 25, 100]"
+  aria-label="Select page"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>

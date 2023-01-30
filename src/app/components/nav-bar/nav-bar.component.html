@@ -1,0 +1,29 @@
+<div [ngClass]="'change'">
+  <div>
+    <nav>
+      <ul>
+        <li>
+          <button
+            mat-button
+            matTooltip="List/Grid View"
+            [routerLink]="['/view-listing']"
+            routerLinkActive
+          >
+            <mat-icon>view_list</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button
+            class="right"
+            mat-button
+            matTooltip="Add Freelancer"
+            *ngIf="roles.includes('manager')"
+            [routerLink]="['/add-freelancer']"
+          >
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
